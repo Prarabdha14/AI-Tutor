@@ -16,7 +16,7 @@ import app.models.tutor_models
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="Cuemath AI Tutor",
+    title = "AI Tutor",
     version="2.0.0",
 )
 
