@@ -21,14 +21,14 @@ class MilvusDB:
         self.collection = self._get_or_create_collection()
 
     def _connect(self):
-        connections.connect(
-            alias=self.alias,
-            host=settings.MILVUS_HOST,
-            port=settings.MILVUS_PORT,
-            user=settings.MILVUS_USER,
-            password=settings.MILVUS_PASSWORD,
-            db_name=settings.MILVUS_DB_NAME,
-        )
+        try:
+            # Use local SQLite-based Milvus Lite so it can deploy on Render for free without Docker
+            connections.connect(
+                alias=self.alias,
+                uri="./milvus_demo.db"
+            )
+        except Exception as e:
+            print(f"Failed to connect to Milvus Lite: {e}")
 
     def _get_or_create_collection(self) -> Collection:
         if utility.has_collection(self.collection_name):
